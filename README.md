@@ -2,6 +2,9 @@
 
 Telegram-бот для получения данных о погоде через OpenWeather API.
 
+**Бот LIVE:** [@spiritweather_bot](https://t.me/spiritweather_bot)  
+**Inline-режим:** работает — поиск погоды по городу через `@spiritweather_bot Москва`
+
 ## Архитектура
 
 - **bot.py** — основной класс `TelegramWeatherBot`, обработчики команд и inline-запросов
