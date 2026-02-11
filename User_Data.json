@@ -1,0 +1,11 @@
+{
+  "320889576": {
+    "city": "казань",
+    "lat": 55.7823547,
+    "lon": 49.1242266,
+    "notifications": {
+      "enabled": false,
+      "interval_h": 2
+    }
+  }
+}
