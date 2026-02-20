@@ -1,6 +1,7 @@
 # Nginx в Docker для Mini App (HTTPS)
 # Запуск: docker compose up -d
-# Статика: папка miniapp-static/ отдаётся по https
+# Сейчас: 8080 (HTTP) и 8443 (HTTPS) — чтобы не конфликтовать с уже занятыми 80/443.
+# Если 80/443 свободны — замените на "80:80" и "443:443".
 
 services:
   nginx:
@@ -8,8 +9,8 @@ services:
     container_name: vpd04-miniapp-nginx
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - ./miniapp-static:/usr/share/nginx/html:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
