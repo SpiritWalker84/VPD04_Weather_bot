@@ -31,7 +31,11 @@ class TelegramWeatherBot:
             raise ValueError("OW_API_KEY не найден. Добавьте ключ OpenWeather в .env")
 
         self.bot = telebot.TeleBot(self.bot_token, parse_mode="HTML")
-        self.storage = UserStorage("User_Data.json")
+        data_dir = os.getenv("BOT_DATA_DIR", "").strip()
+        if data_dir:
+            os.makedirs(data_dir, exist_ok=True)
+        storage_path = os.path.join(data_dir, "User_Data.json") if data_dir else "User_Data.json"
+        self.storage = UserStorage(storage_path)
         self.weather = WeatherClient(
             api_key=self.ow_api_key,
             timeout=self.request_timeout,

@@ -7,8 +7,7 @@ RUN pip install --no-cache-dir flask gunicorn python-dotenv requests
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY miniapp_api.py .
-COPY weather_app.py .
+COPY miniapp_api.py weather_app.py bot.py storage.py ./
 
 ENV PYTHONUNBUFFERED=1
 
