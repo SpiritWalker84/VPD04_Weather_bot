@@ -48,13 +48,66 @@
     }
 
     function clearAnimations() {
-        bgLayer.querySelectorAll(".snowflake, .raindrop, .cloud").forEach(function (el) {
+        bgLayer.querySelectorAll(".snowflake, .raindrop, .cloud, .creature-bird, .creature-squirrel, .creature-hedgehog").forEach(function (el) {
             el.remove();
         });
     }
 
+    function addCreatures() {
+        var bird = "🐦";
+        var squirrel = "🐿️";
+        var hedgehog = "🦔";
+        var b1 = document.createElement("div");
+        b1.className = "creature-bird";
+        b1.textContent = bird;
+        b1.setAttribute("aria-hidden", "true");
+        bgLayer.appendChild(b1);
+        var b2 = document.createElement("div");
+        b2.className = "creature-bird";
+        b2.textContent = bird;
+        b2.setAttribute("aria-hidden", "true");
+        b2.style.top = "18%";
+        b2.style.animationDelay = "-6s";
+        b2.style.animationDuration = "22s";
+        bgLayer.appendChild(b2);
+        var b3 = document.createElement("div");
+        b3.className = "creature-bird";
+        b3.textContent = bird;
+        b3.setAttribute("aria-hidden", "true");
+        b3.style.top = "8%";
+        b3.style.animationDelay = "-12s";
+        b3.style.animationDuration = "20s";
+        bgLayer.appendChild(b3);
+        var s1 = document.createElement("div");
+        s1.className = "creature-squirrel";
+        s1.textContent = squirrel;
+        s1.setAttribute("aria-hidden", "true");
+        bgLayer.appendChild(s1);
+        var s2 = document.createElement("div");
+        s2.className = "creature-squirrel";
+        s2.textContent = squirrel;
+        s2.setAttribute("aria-hidden", "true");
+        s2.style.bottom = "18%";
+        s2.style.animationDelay = "-10s";
+        s2.style.animationDuration = "28s";
+        bgLayer.appendChild(s2);
+        var h1 = document.createElement("div");
+        h1.className = "creature-hedgehog";
+        h1.textContent = hedgehog;
+        h1.setAttribute("aria-hidden", "true");
+        bgLayer.appendChild(h1);
+        var h2 = document.createElement("div");
+        h2.className = "creature-hedgehog";
+        h2.textContent = hedgehog;
+        h2.setAttribute("aria-hidden", "true");
+        h2.style.bottom = "9%";
+        h2.style.right = "12%";
+        h2.style.animationDelay = "-2s";
+        bgLayer.appendChild(h2);
+    }
+
     function addSnow() {
-        var count = 40;
+        var count = 55;
         var frag = document.createDocumentFragment();
         for (var i = 0; i < count; i++) {
             var flake = document.createElement("div");
@@ -70,7 +123,7 @@
     }
 
     function addRain() {
-        var count = 50;
+        var count = 65;
         var frag = document.createDocumentFragment();
         for (var i = 0; i < count; i++) {
             var drop = document.createElement("div");
@@ -110,6 +163,7 @@
         if (code >= 600 && code < 700) addSnow();
         else if ((code >= 500 && code < 600) || (code >= 300 && code < 400) || (code >= 200 && code < 300)) addRain();
         else if (code >= 801 || (code >= 700 && code < 800)) addClouds();
+        addCreatures();
     }
 
     function formatDate(ymd) {

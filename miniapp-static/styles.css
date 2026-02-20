@@ -112,6 +112,52 @@ body:not([class*="weather-"]) .bg-layer {
     }
 }
 
+/* Птичка */
+.creature-bird {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 12%;
+    left: -3rem;
+    animation: flyAcross 18s linear infinite;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+
+
+@keyframes flyAcross {
+    to { transform: translateX(100vw); }
+}
+
+/* Белочка */
+.creature-squirrel {
+    position: absolute;
+    font-size: 1.8rem;
+    bottom: 14%;
+    left: -3rem;
+    animation: runAlong 25s linear infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+
+
+@keyframes runAlong {
+    to { transform: translateX(100vw); }
+}
+
+/* Ёжик выглядывает */
+.creature-hedgehog {
+    position: absolute;
+    font-size: 2rem;
+    bottom: 10%;
+    right: 5%;
+    animation: peek 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+
+@keyframes peek {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
+    50% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+}
+
 /* Контент поверх фона */
 .app {
     position: relative;
@@ -120,6 +166,8 @@ body:not([class*="weather-"]) .bg-layer {
     padding: 1rem;
     padding-top: max(1rem, env(safe-area-inset-top));
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    max-width: 380px;
+    margin: 0 auto;
 }
 
 .header {
@@ -230,12 +278,13 @@ body:not([class*="weather-"]) .bg-layer {
 .forecast-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0;
 }
 
 .forecast-item {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 3.25rem 5.5rem 1fr;
+    gap: 0.5rem;
     align-items: center;
     padding: 0.5rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -251,11 +300,14 @@ body:not([class*="weather-"]) .bg-layer {
 
 .forecast-temps {
     color: var(--text-soft);
+    white-space: nowrap;
 }
 
 .forecast-desc {
     font-size: 0.85rem;
     color: var(--text-soft);
-    max-width: 60%;
     text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
