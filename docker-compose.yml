@@ -1,9 +1,16 @@
-# Nginx в Docker для Mini App (HTTPS)
+# Nginx + API для Mini App (HTTPS)
 # Запуск: docker compose up -d
-# Сейчас: 8080 (HTTP) и 8443 (HTTPS) — чтобы не конфликтовать с уже занятыми 80/443.
-# Если 80/443 свободны — замените на "80:80" и "443:443".
+# Погода: API /api/weather (проксируется в контейнер api).
 
 services:
+  api:
+    build: .
+    container_name: vpd04-miniapp-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - TZ=Europe/Moscow
+
   nginx:
     image: nginx:alpine
     container_name: vpd04-miniapp-nginx
@@ -17,3 +24,5 @@ services:
       - ./certs:/etc/nginx/certs:ro
     environment:
       - TZ=Europe/Moscow
+    depends_on:
+      - api

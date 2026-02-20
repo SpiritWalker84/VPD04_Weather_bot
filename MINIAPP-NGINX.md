@@ -41,11 +41,15 @@ chmod +x scripts/gen-selfsigned-cert.sh
 
 ---
 
-## Шаг 3. Запуск Nginx
+## Шаг 3. Запуск Nginx и API
+
+В корне проекта должен быть файл `.env` с ключом `OW_API_KEY` (как для бота) — API погоды для Mini App использует его.
 
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
+
+Поднимаются два контейнера: **api** (Flask, данные погоды) и **nginx** (статика + прокси `/api/`).
 
 Проверка:
 

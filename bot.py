@@ -23,6 +23,7 @@ class TelegramWeatherBot:
         self.default_interval_h = int(os.getenv("DEFAULT_NOTIFICATIONS_INTERVAL_H", "2"))
         self.request_timeout = int(os.getenv("REQUEST_TIMEOUT", "8"))
         self.cache_ttl_min = int(os.getenv("CACHE_TTL_MIN", "10"))
+        self.miniapp_url = (os.getenv("MINIAPP_URL", "").strip() or "https://193.42.127.176:8443").rstrip("/")
 
         if not self.bot_token:
             raise ValueError("BOT_TOKEN не найден. Добавьте токен в .env")
@@ -111,6 +112,8 @@ class TelegramWeatherBot:
             types.KeyboardButton("Уведомления"),
         ]
         markup.add(*buttons)
+        if self.miniapp_url:
+            markup.add(types.KeyboardButton("Открыть приложение", web_app=types.WebAppInfo(url=self.miniapp_url)))
         return markup
 
     def _send_main_menu(self, chat_id: int, text: str) -> None:
