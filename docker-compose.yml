@@ -1,0 +1,18 @@
+# Nginx в Docker для Mini App (HTTPS)
+# Запуск: docker compose up -d
+# Статика: папка miniapp-static/ отдаётся по https
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: vpd04-miniapp-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./miniapp-static:/usr/share/nginx/html:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certs:/etc/nginx/certs:ro
+    environment:
+      - TZ=Europe/Moscow
