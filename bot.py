@@ -101,7 +101,7 @@ class TelegramWeatherBot:
         def handle_inline(query: types.InlineQuery) -> None:
             self._handle_inline_query(query)
 
-    def _main_menu_markup(self) -> types.ReplyKeyboardMarkup:
+    def _main_menu_markup(self, with_miniapp: bool = True) -> types.ReplyKeyboardMarkup:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         buttons = [
             types.KeyboardButton("Текущая погода"),
@@ -112,12 +112,20 @@ class TelegramWeatherBot:
             types.KeyboardButton("Уведомления"),
         ]
         markup.add(*buttons)
-        if self.miniapp_url:
-            markup.add(types.KeyboardButton("Открыть приложение", web_app=types.WebAppInfo(url=self.miniapp_url)))
+        if with_miniapp and self.miniapp_url:
+            try:
+                markup.add(
+                    types.KeyboardButton("Открыть приложение", web_app=types.WebAppInfo(url=self.miniapp_url))
+                )
+            except Exception:
+                pass
         return markup
 
     def _send_main_menu(self, chat_id: int, text: str) -> None:
-        self.bot.send_message(chat_id, text, reply_markup=self._main_menu_markup())
+        try:
+            self.bot.send_message(chat_id, text, reply_markup=self._main_menu_markup(with_miniapp=True))
+        except Exception:
+            self.bot.send_message(chat_id, text, reply_markup=self._main_menu_markup(with_miniapp=False))
 
     def _handle_text_message(self, message: types.Message) -> None:
         user_id = message.from_user.id
