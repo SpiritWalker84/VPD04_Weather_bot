@@ -51,9 +51,6 @@
         bgLayer.querySelectorAll(".snowflake, .raindrop, .cloud, .lightning, .branch, .leaf, .fog-particle, .sunray, .rainbow").forEach(function (el) {
             el.remove();
         });
-        if (window.clearCreatures) {
-            window.clearCreatures();
-        }
     }
 
     function addLightning() {
@@ -187,29 +184,31 @@
         setWeatherTheme(code);
         if (code >= 600 && code < 700) {
             addSnow();
+            addBranches();
         } else if (code >= 500 && code < 600) {
             addRain();
+            addBranches();
             addLeaves();
         } else if (code >= 300 && code < 400) {
             addRain();
+            addBranches();
         } else if (code >= 200 && code < 300) {
             addRain();
             addLightning();
+            addBranches();
         } else if (code >= 700 && code < 800) {
             addClouds();
             addFog();
+            addBranches();
         } else if (code >= 801) {
             addClouds();
+            addBranches();
             addLeaves();
         } else if (code === 800) {
             addSunrays();
+            addBranches();
             addLeaves();
             if (Math.random() > 0.7) addRainbow();
-        }
-        if (window.initCreatures) {
-            setTimeout(function() {
-                window.initCreatures();
-            }, 500);
         }
     }
 
