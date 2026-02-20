@@ -120,11 +120,20 @@ body:not([class*="weather-"]) .bg-layer {
     left: -3rem;
     animation: flyAcross 18s linear infinite;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+    transform-origin: center center;
 }
 
-
 @keyframes flyAcross {
-    to { transform: translateX(100vw); }
+    0% { transform: translateX(0) translateY(0) rotate(0deg) scaleY(1); }
+    2% { transform: translateX(2vw) translateY(-2px) rotate(-6deg) scaleY(0.96); }
+    4% { transform: translateX(4vw) translateY(-4px) rotate(0deg) scaleY(1); }
+    6% { transform: translateX(6vw) translateY(-2px) rotate(-6deg) scaleY(0.96); }
+    8% { transform: translateX(8vw) translateY(0) rotate(0deg) scaleY(1); }
+    25% { transform: translateX(25vw) translateY(-15px) rotate(-5deg) scaleY(0.97); }
+    50% { transform: translateX(50vw) translateY(0) rotate(0deg) scaleY(1); }
+    75% { transform: translateX(75vw) translateY(-12px) rotate(-5deg) scaleY(0.97); }
+    98% { transform: translateX(98vw) translateY(-2px) rotate(-6deg) scaleY(0.96); }
+    100% { transform: translateX(100vw) translateY(0) rotate(0deg) scaleY(1); }
 }
 
 /* Белочка */
@@ -135,11 +144,21 @@ body:not([class*="weather-"]) .bg-layer {
     left: -3rem;
     animation: runAlong 25s linear infinite;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    transform-origin: center bottom;
 }
 
-
 @keyframes runAlong {
-    to { transform: translateX(100vw); }
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    10% { transform: translateX(10vw) translateY(-3px) rotate(-2deg); }
+    20% { transform: translateX(20vw) translateY(0) rotate(0deg); }
+    30% { transform: translateX(30vw) translateY(-3px) rotate(2deg); }
+    40% { transform: translateX(40vw) translateY(0) rotate(0deg); }
+    50% { transform: translateX(50vw) translateY(-3px) rotate(-2deg); }
+    60% { transform: translateX(60vw) translateY(0) rotate(0deg); }
+    70% { transform: translateX(70vw) translateY(-3px) rotate(2deg); }
+    80% { transform: translateX(80vw) translateY(0) rotate(0deg); }
+    90% { transform: translateX(90vw) translateY(-3px) rotate(-2deg); }
+    100% { transform: translateX(100vw) translateY(0) rotate(0deg); }
 }
 
 /* Ёжик выглядывает */
@@ -148,14 +167,19 @@ body:not([class*="weather-"]) .bg-layer {
     font-size: 2rem;
     bottom: 10%;
     right: 5%;
-    animation: peek 4s ease-in-out infinite;
+    animation: peek 6s ease-in-out infinite;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transform-origin: center bottom;
 }
 
-
 @keyframes peek {
-    0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
+    0% { transform: translateY(15px) scale(0.8); opacity: 0; }
+    15% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+    30% { transform: translateY(-5px) scale(1); opacity: 1; }
     50% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+    70% { transform: translateY(-5px) scale(1); opacity: 1; }
+    85% { transform: translateY(-8px) scale(1.05); opacity: 1; }
+    100% { transform: translateY(15px) scale(0.8); opacity: 0; }
 }
 
 /* Контент поверх фона */
