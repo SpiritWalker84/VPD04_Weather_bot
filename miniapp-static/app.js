@@ -177,8 +177,24 @@
         showLoading();
         fetch(buildApiUrl())
             .then(function (r) {
-                if (!r.ok) throw new Error("Ошибка загрузки");
-                return r.json();
+                return r.text().then(function (text) {
+                    if (!r.ok) {
+                        if (text && text.trim().indexOf("<") === 0) {
+                            throw new Error("Сервер погоды недоступен. Проверьте контейнер api (docker compose ps).");
+                        }
+                        throw new Error("Ошибка загрузки: " + r.status);
+                    }
+                    var data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        if (text && text.trim().indexOf("<") === 0) {
+                            throw new Error("Сервер погоды вернул страницу вместо данных. Запустите: docker compose up -d");
+                        }
+                        throw new Error("Неверный ответ сервера.");
+                    }
+                    return data;
+                });
             })
             .then(function (data) {
                 if (data.error) throw new Error(data.error);

@@ -20,6 +20,14 @@ app = Flask(__name__)
 _weather_client: WeatherClient | None = None
 
 
+@app.errorhandler(500)
+@app.errorhandler(Exception)
+def handle_error(err):
+    """Всегда возвращаем JSON, чтобы приложение не получало HTML."""
+    msg = getattr(err, "message", str(err)) if err else "Ошибка сервера"
+    return jsonify({"error": msg}), 500 if not hasattr(err, "code") else getattr(err, "code", 500)
+
+
 def get_weather_client() -> WeatherClient:
     global _weather_client
     if _weather_client is None:
