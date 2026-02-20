@@ -51,7 +51,43 @@ docker compose up -d --build
 
 Поднимаются три контейнера: **api** (Flask, данные погоды), **nginx** (статика + прокси `/api/`), **bot** (Telegram-бот). Бот перезапускается вместе с остальными и отвечает на /start и команды меню.
 
-Если в приложении погода не грузится и видна ошибка «Сервер погоды недоступен» — проверьте: `docker compose ps` (все три контейнера в статусе Up), в `.env` задан `OW_API_KEY`. Логи API: `docker compose logs api`.
+**Если в приложении пишет «Сервер погоды вернул страницу вместо данных»** — nginx отдаёт 502, контейнер **api** не отвечает. На сервере выполните по порядку:
+
+1. **Статус контейнеров**
+   ```bash
+   cd ~/VPD04_Weather_bot   # или ваш путь к проекту
+   docker compose ps
+   ```
+   Должны быть **Up** все три: api, bot, nginx. Если у **api** статус **Restarting** или **Exit** — смотрите логи (шаг 2).
+
+2. **Логи API**
+   ```bash
+   docker compose logs api
+   ```
+   Если есть ошибки (ImportError, ModuleNotFoundError, OW_API_KEY и т.п.) — исправьте и пересоберите.
+
+3. **Файл .env**
+   ```bash
+   ls -la .env
+   grep OW_API_KEY .env
+   ```
+   Файл `.env` должен быть в той же папке, что и `docker-compose.yml`, в нём должна быть непустая строка `OW_API_KEY=...`.
+
+4. **Перезапуск с пересборкой**
+   ```bash
+   docker compose down
+   docker compose up -d --build
+   docker compose ps
+   ```
+   Подождите 15–20 секунд (healthcheck у api), затем снова откройте приложение.
+
+5. **Проверка API с сервера**
+   ```bash
+   curl -sk "https://127.0.0.1:8443/api/health"
+   curl -sk "https://127.0.0.1:8443/api/weather?city=Москва"
+   ```
+   (`-k` — не проверять сертификат.) В ответе должен быть JSON.
+   В ответе должен быть JSON, а не HTML. Если видите HTML — контейнер api не поднят или nginx не проксирует на него.
 
 Проверка:
 

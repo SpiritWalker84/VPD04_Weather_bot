@@ -10,6 +10,12 @@ services:
     environment:
       - TZ=Europe/Moscow
     command: gunicorn -w 1 -b 0.0.0.0:5000 miniapp_api:app
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
   bot:
     build: .
@@ -37,7 +43,8 @@ services:
     environment:
       - TZ=Europe/Moscow
     depends_on:
-      - api
+      api:
+        condition: service_healthy
 
 volumes:
   bot-data:
